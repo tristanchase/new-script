@@ -3,6 +3,7 @@ set -euo pipefail
 set -o errtrace
 #set -x
 IFS=$'\n\t'
+# whitespace test
 
 #-----------------------------------
 

@@ -52,7 +52,7 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 # Script ends here
 #-----------------------------------
 
-fi 
+fi
 
 # End of main script
 #-----------------------------------
