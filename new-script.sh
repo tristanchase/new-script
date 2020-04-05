@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+set -o errtrace
+#set -x
 IFS=$'\n\t'
 
 #-----------------------------------
@@ -34,27 +36,47 @@ error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
 fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
 
 #-----------------------------------
+# Trap functions
+
+traperr() {
+	info "ERROR: ${BASH_SOURCE[1]} at line ${BASH_LINENO[0]}"
+}
+
+ctrl_c(){
+	exit 2
+}
 
 cleanup() {
-	# Remove temporary files
-	# Restart services
-	if [[ "$?" -ne "0" ]]; then
-		rm -r $_dir
-		fatal ""$(basename $0)": $_name: script not created."
-	fi
+	case "$?" in
+		0) # exit 0; success!
+			#do nothing
+			;;
+		2) # exit 2; user termination
+			info ""$(basename $0)": script terminated by user."
+			;;
+		*) # any other exit number; indicates an error in the script
+			rm -r $_dir
+			fatal ""$(basename $0)": script $_name not created."
+			;;
+	esac
 }
 
 #-----------------------------------
 # Main script
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+	trap traperr ERR
+	trap ctrl_c INT
 	trap cleanup EXIT
-	# Script goes here
-	# ...
+#-----------------------------------
+# Script goes here
 
 	getname() {
-		printf "Enter the name of your new script: "
+		printf "Name your new script (blank exits): "
 		read _name
+		if [[ -z $_name ]]; then
+			exit 2
+		fi
 		_filepath=${HOME}/devel
 		_newfile=$_name.sh
 		_dir=$_filepath/$_name
@@ -67,11 +89,11 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 
 
 	while [[ -e $_file ]]; do
-		printf "That file already exists!\n"
+		printf "That script already exists!\n"
 		getname
 	done
 
-	printf "Enter a description of your new script: "
+	printf "Describe your new script (optional): "
 	read _description
 
 	mkdir -p $_dir
@@ -101,8 +123,14 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 EOF
 	cat $_boilerplate_3 >> $_newfile
 
-	vim + $_newfile
+	vim +/start_here $_newfile # open vim on line with "<start_here>"
 
-fi # End of main script
+# Script ends here
+#-----------------------------------
+
+fi 
+
+# End of main script
+#-----------------------------------
 
 exit 0

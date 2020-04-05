@@ -14,20 +14,47 @@ error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
 fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
 
 #-----------------------------------
+# Trap functions
+
+traperr() {
+	info "ERROR: ${BASH_SOURCE[1]} at line ${BASH_LINENO[0]}"
+}
+
+ctrl_c(){
+	exit 2
+}
 
 cleanup() {
-	# Remove temporary files
-	# Restart services
+	case "$?" in
+		0) # exit 0; success!
+			#do nothing
+			;;
+		2) # exit 2; user termination
+			info ""$(basename $0)": script terminated by user."
+			;;
+		*) # any other exit number; indicates an error in the script
+			#clean up stray files
+			#fatal ""$(basename $0)": [error message here]"
+			;;
+	esac
 }
 
 #-----------------------------------
 # Main script
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+	trap traperr ERR
+	trap ctrl_c INT
 	trap cleanup EXIT
-	# Script goes here
-	# ...
-fi # End of main script
+#-----------------------------------
+# Script goes here
+# <start_here>
+# Script ends here
+#-----------------------------------
+
+fi 
+
+# End of main script
+#-----------------------------------
 
 exit 0
-
