@@ -1,40 +1,40 @@
 #-----------------------------------
 # Low-tech help option
 
-usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
-expr "$*" : ".*--help" > /dev/null && usage
+__usage() { grep '^#/' "${0}" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && __usage
 
 #-----------------------------------
 # Low-tech logging function
 
-readonly LOG_FILE=""$HOME"/tmp/$(basename "$0").log"
-info()    { echo "[INFO]    $*" | tee -a "$LOG_FILE" >&2 ; }
-warning() { echo "[WARNING] $*" | tee -a "$LOG_FILE" >&2 ; }
-error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
-fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+readonly LOG_FILE=""${HOME}"/tmp/$(basename "${0}").log"
+__info()    { echo "[INFO]    $*" | tee -a "${LOG_FILE}" >&2 ; }
+__warning() { echo "[WARNING] $*" | tee -a "${LOG_FILE}" >&2 ; }
+__error()   { echo "[ERROR]   $*" | tee -a "${LOG_FILE}" >&2 ; }
+__fatal()   { echo "[FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ; }
 
 #-----------------------------------
 # Trap functions
 
-traperr() {
-	info "ERROR: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
+__traperr() {
+	__info "ERROR: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
 }
 
-ctrl_c(){
+__ctrl_c(){
 	exit 2
 }
 
-cleanup() {
+__cleanup() {
 	case "$?" in
 		0) # exit 0; success!
 			#do nothing
 			;;
 		2) # exit 2; user termination
-			info ""$(basename $0).$$": script terminated by user."
+			__info ""$(basename $0).$$": script terminated by user."
 			;;
 		*) # any other exit number; indicates an error in the script
 			#clean up stray files
-			#fatal ""$(basename $0).$$": [error message here]"
+			#__fatal ""$(basename $0).$$": [error message here]"
 			;;
 	esac
 }
@@ -42,10 +42,10 @@ cleanup() {
 #-----------------------------------
 # Main Script Wrapper
 
-if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
-	trap traperr ERR
-	trap ctrl_c INT
-	trap cleanup EXIT
+if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
+	trap __traperr ERR
+	trap __ctrl_c INT
+	trap __cleanup EXIT
 #-----------------------------------
 # Main Script goes here
 # <start_here>
