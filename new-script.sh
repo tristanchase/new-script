@@ -83,6 +83,7 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 		_file=$_dir/$_newfile
 		_boilerplate_1=$_filepath/new-script/boilerplate-1.sh
 		_boilerplate_3=$_filepath/new-script/boilerplate-3.sh
+		_todo_section="${_filepath}/new-script/todo-section.sh"
 	}
 
 	getname
@@ -123,6 +124,8 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
 EOF
 	cat $_boilerplate_3 >> $_newfile
 
+	cat ${_todo_section} >> ${_newfile}
+
 	vim +/start_here $_newfile # open vim on line with "<start_here>"
 
 # Script ends here
@@ -134,3 +137,12 @@ fi
 #-----------------------------------
 
 exit 0
+
+# TODO
+#
+# * Update dependencies section
+# * Update usage, description, and options section
+# * Rename $variables to ${_variables}
+# * Insert function before function_name()
+# * Modify command substitution to "$(this_style)"
+# * Clean up stray ;'s
