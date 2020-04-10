@@ -1,30 +1,30 @@
 #-----------------------------------
 # Low-tech help option
 
-__usage() { grep '^#/' "${0}" | cut -c4- ; exit 0 ; }
+function __usage() { grep '^#/' "${0}" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && __usage
 
 #-----------------------------------
 # Low-tech logging function
 
 readonly LOG_FILE=""${HOME}"/tmp/$(basename "${0}").log"
-__info()    { echo "[INFO]    $*" | tee -a "${LOG_FILE}" >&2 ; }
-__warning() { echo "[WARNING] $*" | tee -a "${LOG_FILE}" >&2 ; }
-__error()   { echo "[ERROR]   $*" | tee -a "${LOG_FILE}" >&2 ; }
-__fatal()   { echo "[FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ; }
+function __info()    { echo "[INFO]    $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __warning() { echo "[WARNING] $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __error()   { echo "[ERROR]   $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __fatal()   { echo "[FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ; }
 
 #-----------------------------------
 # Trap functions
 
-__traperr() {
-	__info "ERROR: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
+function __traperr() {
+	__info "ERROR: ${FUNCNAME[1]}: ${BASH_COMMAND}: $?: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
 }
 
-__ctrl_c(){
+function __ctrl_c(){
 	exit 2
 }
 
-__cleanup() {
+function __cleanup() {
 	case "$?" in
 		0) # exit 0; success!
 			#do nothing
