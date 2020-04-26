@@ -1,8 +1,8 @@
 #-----------------------------------
 # Low-tech help option
 
-function __usage() { grep '^#/' "${0}" | cut -c4- ; exit 0 ; }
-expr "$*" : ".*--help" > /dev/null && __usage
+function __usage() { grep '^#//' "${0}" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*-h\|--help" > /dev/null && __usage
 
 #-----------------------------------
 # Low-tech logging function
@@ -48,7 +48,9 @@ if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
 	trap __cleanup EXIT
 #-----------------------------------
 # Main Script goes here
+
 # <start_here>
+
 # Main Script ends here
 #-----------------------------------
 

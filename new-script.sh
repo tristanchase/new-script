@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
-set -euo pipefail
+
+# Low-tech debug mode
+if [[ "${1:-}" =~ (-d|--debug) ]]; then
+	set -x
+	exec > >(tee ""${HOME}"/tmp/$(basename "${0}")-debug.$$") 2>&1
+	shift
+fi
+
+# Same as set -euE -o pipefail
+set -o errexit
+set -o nounset
 set -o errtrace
-#set -x
+set -o pipefail
 IFS=$'\n\t'
 
 #-----------------------------------
 
-#/ Usage: new-script [--help]
-#/ Description: Creates a new script in its own devel folder.
-#/ Examples: new-script
-#/ Options:
-#/   --help: Display this help message
+#/:Usage: new-script [ {-d|--debug} ] [--help]
+#/:Description: Creates a new script in its own devel folder.
+#/:Examples: new-script
+#/:Options:
+#/:	-d --debug	Enable debug mode
+#/:	-h --help	Display this help message
 
 # Created: 2020-01-03
 # Tristan M. Chase <tristan.m.chase@gmail.com>
@@ -21,8 +32,8 @@ IFS=$'\n\t'
 #-----------------------------------
 # Low-tech help option
 
-function __usage() { grep '^#/' "${0}" | cut -c4- ; exit 0 ; }
-expr "$*" : ".*--help" > /dev/null && __usage
+function __usage() { grep '^#/:' "${0}" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*-h\|--help" > /dev/null && __usage
 
 #-----------------------------------
 # Low-tech logging function
@@ -105,11 +116,12 @@ if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
 	cat >> ${_newfile} << EOF
 #-----------------------------------
 
-#/ Usage: ${_name} [<options>] [<arguments>]
-#/ Description: ${_description}
-#/ Examples:
-#/ Options:
-#/   --help: Display this help message
+#//Usage: ${_name} [ {-d|--debug} ] [<options>] [<arguments>]
+#//Description: ${_description}
+#//Examples:
+#//Options:
+#//	-d --debug	Enable debug mode
+#//	-h --help	Display this help message
 
 # Created: $(date -Iseconds)
 # Tristan M. Chase <tristan.m.chase@gmail.com>
