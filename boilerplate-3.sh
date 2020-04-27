@@ -17,7 +17,7 @@ function __fatal()   { echo "[FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ;
 # Trap functions
 
 function __traperr() {
-	__info "ERROR: ${FUNCNAME[1]}: ${BASH_COMMAND}: $?: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
+	__error "${FUNCNAME[1]}: ${BASH_COMMAND}: $?: ${BASH_SOURCE[1]}.$$ at line ${BASH_LINENO[0]}"
 }
 
 function __ctrl_c(){
@@ -37,6 +37,10 @@ function __cleanup() {
 			#__fatal ""$(basename $0).$$": [error message here]"
 			;;
 	esac
+
+	if [[ -n "${_debug_file:-}" ]]; then
+		echo "Debug file is: "${_debug_file:-}""
+	fi
 }
 
 #-----------------------------------
