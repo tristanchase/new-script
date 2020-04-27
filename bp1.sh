@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#-----------------------------------
+# Section 1.
 
 # Low-tech debug mode
 if [[ "${1:-}" =~ (-d|--debug) ]]; then
@@ -15,4 +17,5 @@ set -o errtrace
 set -o pipefail
 IFS=$'\n\t'
 
-
+# End Section 1.
+#-----------------------------------

@@ -1,3 +1,5 @@
+#-----------------------------------
+# Section 5.
 
 # TODO (bottom up)
 #
@@ -12,3 +14,6 @@
 # * Modify command substitution to "$(this_style)"
 # * Clean up stray ;'s
 # * Insert script
+
+# End Section 5.
+#-----------------------------------

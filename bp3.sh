@@ -1,10 +1,6 @@
 #-----------------------------------
-# Low-tech help option
+# Section 3.
 
-function __usage() { grep '^#//' "${0}" | cut -c4- ; exit 0 ; }
-expr "$*" : ".*-h\|--help" > /dev/null && __usage
-
-#-----------------------------------
 # Low-tech logging function
 
 readonly LOG_FILE=""${HOME}"/tmp/$(basename "${0}").log"
@@ -50,17 +46,17 @@ if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
 	trap __traperr ERR
 	trap __ctrl_c INT
 	trap __cleanup EXIT
+
+#-----------------------------------
+# Low-tech help option
+
+function __usage() { grep '^#//' "${0}" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*-h\|--help" > /dev/null && __usage
+
 #-----------------------------------
 # Main Script goes here
 
 # <start_here>
 
-# Main Script ends here
+# End Section 3.
 #-----------------------------------
-
-fi
-
-# End of Main Script Wrapper
-#-----------------------------------
-
-exit 0

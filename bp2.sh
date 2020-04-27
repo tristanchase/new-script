@@ -1,8 +1,9 @@
 #-----------------------------------
+# Section 2.
 
-#//Usage: $_name [ {-d|--debug} ] [<options>] [<arguments>]
-#//Description: $_description
-#//Examples: example foo; example -d bar
+#//Usage: ${_name} [ {-d|--debug} ] [ {-h|--help} | <options>] [<arguments>]
+#//Description: ${_description}
+#//Examples: ${_name} foo; ${_name} --debug bar
 #//Options:
 #//	-d --debug	Enable debug mode
 #//	-h --help	Display this help message
@@ -15,3 +16,5 @@
 #  of
 #  dependencies
 
+# End Section 2.
+#-----------------------------------
