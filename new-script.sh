@@ -109,6 +109,7 @@ expr "$*" : ".*-h\|--help" > /dev/null && __usage
 		_dir="${_filepath}/${_name}"
 		_file="${_dir}/${_newfile}"
 		_boilerplate_1="${_filepath}/new-script/bp1.sh"
+		_boilerplate_2="${_filepath}/new-script/bp2.sh"
 		_boilerplate_3="${_filepath}/new-script/bp3.sh"
 		_boilerplate_4="${_filepath}/new-script/bp4.sh"
 		_todo_section="${_filepath}/new-script/todo-section.sh"

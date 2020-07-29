@@ -3,11 +3,12 @@
 
 # Low-tech logging function
 
-readonly LOG_FILE=""${HOME}"/tmp/$(basename "${0}").log"
-function __info()    { echo "[INFO]    $*" | tee -a "${LOG_FILE}" >&2 ; }
-function __warning() { echo "[WARNING] $*" | tee -a "${LOG_FILE}" >&2 ; }
-function __error()   { echo "[ERROR]   $*" | tee -a "${LOG_FILE}" >&2 ; }
-function __fatal()   { echo "[FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ; }
+readonly LOG_FILE=""${HOME}"/script-logs/$(basename "${0}")/$(basename "${0}").log"
+mkdir -p $(dirname ${LOG_FILE})
+function __info()    { echo "$(date -Iseconds) [INFO]    $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __warning() { echo "$(date -Iseconds) [WARNING] $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __error()   { echo "$(date -Iseconds) [ERROR]   $*" | tee -a "${LOG_FILE}" >&2 ; }
+function __fatal()   { echo "$(date -Iseconds) [FATAL]   $*" | tee -a "${LOG_FILE}" >&2 ; exit 1 ; }
 
 #-----------------------------------
 # Trap functions
@@ -17,7 +18,7 @@ function __traperr() {
 }
 
 function __ctrl_c(){
-	exit 2
+	exit 130
 }
 
 function __cleanup() {
@@ -25,8 +26,26 @@ function __cleanup() {
 		0) # exit 0; success!
 			#do nothing
 			;;
-		2) # exit 2; user termination
-			__info ""$(basename $0).$$": script terminated by user."
+		1) # exit 1; General error
+			#do nothing
+			;;
+		2) # exit 2; Missing keyword or command, or permission problem
+			__fatal "$(basename "${0}"): missing keyword or command, or permission problem."
+			;;
+		126) # exit 126; Cannot execute command (permission denied or not executable)
+			#do nothing
+			;;
+		127) # exit 127; Command not found (problem with $PATH or typo)
+			#do nothing
+			;;
+		128) # exit 128; Invalid argument to exit (integers from 0 - 255)
+			#do nothing
+			;;
+		130) # exit 130; user termination
+			__fatal ""$(basename $0).$$": script terminated by user."
+			;;
+		255) # exit 255; Exit status out of range (e.g. exit -1)
+			#do nothing
 			;;
 		*) # any other exit number; indicates an error in the script
 			#clean up stray files
