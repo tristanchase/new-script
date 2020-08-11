@@ -14,7 +14,7 @@ todo
 lic sec
   copyright
   lic
-shared functions (source) 
+shared functions (source)
   debug
   logging
   trap functions
