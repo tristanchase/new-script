@@ -1,7 +1,7 @@
 shebang
 desc sec
   name
-  usage()
+  usage sec
     usage
     desc
     examples
@@ -10,20 +10,28 @@ desc sec
   created by
   depends on
   changelog
-todo
+todo sec
 lic sec
   copyright
   lic
-shared functions (source)
+__main_script {
+  __local_functions
+  ;
+}
+source helper files
+set flags
+__shared_functions__ (source)
   debug
   logging
   trap functions
   dep
-local functions
+  usage()
 sanity check
   be root?
   initialize variables
 process options
 bash settings
 main script wrapper
-main script
+  __main_script
+end main script wrapper
+exit 0
