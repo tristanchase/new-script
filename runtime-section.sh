@@ -13,6 +13,12 @@ function __main_script {
 
 } #end __main_script
 
+# Local functions
+
+function __local_cleanup {
+	:
+}
+
 # Source helper functions
 if [[ -e ~/.functions.sh ]]; then
 	source ~/.functions.sh
