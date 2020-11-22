@@ -7,15 +7,15 @@
 #_tempfiles=("${_temp}")
 
 # Put main script here
-function __main_script {
+function __main_script__ {
 
 	<start_here>
 
-} #end __main_script
+} #end __main_script__
 
 # Local functions
 
-function __local_cleanup {
+function __local_cleanup__ {
 	:
 }
 
@@ -23,9 +23,6 @@ function __local_cleanup {
 if [[ -e ~/.functions.sh ]]; then
 	source ~/.functions.sh
 fi
-
-# Low-tech logging function
-__logger__
 
 # Get some basic options
 # TODO Make this more robust
@@ -49,7 +46,7 @@ if [[ "${BASH_SOURCE[0]}" = "${0}" ]]; then
 	trap __ctrl_c__ INT
 	trap __cleanup__ EXIT
 
-	__main_script
+	__main_script__
 
 
 fi
