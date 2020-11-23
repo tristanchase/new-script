@@ -72,7 +72,7 @@ function __main_script__ {
 
 function __convert_script__ {
 	# Back up original file (cp file file.orig)
-	# Add tags to file (<usage> <created> <deps> <todo> <license> <main> <functions> <options> <settings>)
+	# Add tags to file (<usage> <created> <depends> <todo> <license> <main> <functions> <options> <settings>)
 	:
 }
 
