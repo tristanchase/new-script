@@ -19,11 +19,11 @@
 
 #-----------------------------------
 # TODO Section
+# * Create -c|--convert option
+#   * Update usage section
 # * Update README.md file
 
 # DONE
-# + Create -t|--template option
-#   + Update usage section
 
 #-----------------------------------
 
@@ -69,6 +69,12 @@ function __main_script__ {
 } #end __main_script__
 
 # Local functions
+
+function __convert_script__ {
+	# Back up original file (cp file file.orig)
+	# Add tags to file (<usage> <created> <deps> <todo> <license> <main> <functions> <options> <settings>)
+	:
+}
 
 function __create_script__ {
 	__usage_section__
