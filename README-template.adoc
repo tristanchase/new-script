@@ -1,0 +1,40 @@
+= How to Use *project-var*
+:author: Tristan M. Chase
+:toc:
+
+== Introduction
+
+*project-var* is a shell script for ...
+
+== List of features
+
+== Installing
+
+Copy and paste this into your favo[u]rite terminal:
+
+....
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tristanchase/project-var/master/install.sh)"
+....
+
+== Usage
+
+== Quick Tutorial
+
+(with code or images)
+
+== Technologies Used
+
+(dependencies)
+(libraries & versions, helps recruiters)
+
+== Support
+
+== Roadmap
+
+== Contributing
+
+== Acknowledgments
+
+== License
+
+== Project Status
