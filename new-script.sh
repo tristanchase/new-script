@@ -59,9 +59,6 @@ function __main_script__ {
 		__getname__
 	done
 
-	# Set up dirs
-	#
-
 	# Get an optional description of the new script.
 	printf "Describe your new script (optional): "
 	read _description
