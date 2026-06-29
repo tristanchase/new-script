@@ -42,11 +42,14 @@ source ${HOME}/.functions.sh
 # Get some basic options
 # TODO Make this more robust
 #<options>
-if [[ "${1:-}" =~ (-d|--debug) ]]; then
-	__debugger__
-elif [[ "${1:-}" =~ (-h|--help) ]]; then
-	__usage__
-fi
+shopt -s extglob
+case "${1:-}" in
+	(-d|--debug) __debugger__ ;;
+	(-h|--help) __show_help__ ; exit 2 ;;
+	(-*|--*)  printf "%b\n" ""${_script_name}": Option \""${1:-}"\" not recognized."  1>&2 ; __show_help__ ; exit 2  1>&2 ;;
+	#('') printf "%b\n" ""${_script_name}": Argument required." 1>&2 ; __show_help__ ; exit 2  1>&2 ;;
+	(*) _arg="${1:-}"
+esac
 #</options>
 
 #-----------------------------------
